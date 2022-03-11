@@ -1,5 +1,7 @@
 # Python scripting basics - Rock, paper and scissors game
 
+https://user-images.githubusercontent.com/79418979/157933645-d768fd01-b5e1-4eb3-ac0c-7de44a492f41.mp4
+
 ![Rock paper scissors game using python](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/6nogn8xccqbp0h3mnr0s.gif)
 
 ## Contents
