@@ -126,4 +126,4 @@ else:
 print(f"Hello {user_name}. Your BMI is {bmi}. Your body mass index is {result}.")
 ```
 
-* You can download the file from my [GitHub](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/0000002_bmi_calculator.py) page.
+* You can download the file from my [GitHub](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000002_bmi_calculator.py) page.

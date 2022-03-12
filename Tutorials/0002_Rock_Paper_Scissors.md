@@ -198,4 +198,4 @@ If you do not know if [this](https://ascii.co.uk/) or [this](https://www.asciiar
 
 ## Putting it all together <a name="Al9"></a>
 
-Visit my [GitHub](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/0000003_rock_paper_scissors.py) page to check out the complete code to create a Rock, paper, scissors game that can be played on the terminal.
+Visit my [GitHub](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000003_rock_paper_scissors.py) page to check out the complete code to create a Rock, paper, scissors game that can be played on the terminal.
