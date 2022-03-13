@@ -153,7 +153,7 @@ The [os](https://docs.python.org/3/library/os.html) module has uses the standard
 import os
 x = import.system('clear') # Linux environments
 
-x = import.system('clear') # Windows environments
+x = import.system('cls') # Windows environments
 ```
 
 ### Displaying scores as via a DataFrame <a name="Al7"></a>
@@ -192,7 +192,7 @@ Round 5                    0                    0      0
 
 ```
 
-If you do not know if [this](https://ascii.co.uk/) or [this](https://www.asciiart.eu/) website already, do pay them a visit. Its fun to add some ascii graphics to terminal code. Our friend "The Machinee" is from here it self.
+If you do not know [this](https://ascii.co.uk/) or [this](https://www.asciiart.eu/) website already, do pay them a visit. Its fun to add some ascii graphics to terminal code. Our friend "The Machinee" is from here it self.
 
 ## Putting it all together <a name="Al9"></a>
 
