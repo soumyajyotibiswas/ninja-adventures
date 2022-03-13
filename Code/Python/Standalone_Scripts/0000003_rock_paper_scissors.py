@@ -122,7 +122,7 @@ def play_game():
             score_board.loc[f'Round {play_count}'] = [0,0,0]
             get_match_winner()
             play_count += 1
-            null_input = input("\nPress ANY key to continue")
+            null_input = input("\nPress ENTER to continue")
             screen_clear()
         if play_count > max_plays:
             break
@@ -139,9 +139,9 @@ def final_scoring():
             custom_print(f"{cpu_player_name} wins the game.")
         else:
             custom_print(f"Its a DRAW between {user_input_name} and {cpu_player_name}.")
-        custom_print(f"Max no plays {max_plays} reached. Thank you for playing. Press ANY key to EXIT !!")
+        custom_print(f"Max no plays {max_plays} reached. Thank you for playing. Press ENTER to EXIT !!")
     else:
-        custom_print(f"Max invalid inputs of {max_retries} reached. Press ANY key to EXIT !!")
+        custom_print(f"Max invalid inputs of {max_retries} reached. Press ENTER to EXIT !!")
     null_input = input()
 
 def set_scoreboard():
@@ -150,14 +150,14 @@ def set_scoreboard():
 
 def main():
     custom_print(rules)
-    null_input = input("If you understand the rules, press ANY key to continue: ")
+    null_input = input("If you understand the rules, press ENTER to continue: ")
     screen_clear()
     validate_user_input_name()
     screen_clear()
     custom_print(f"The game will be played between {user_input_name} and {cpu_player_name}.")
     custom_print(f"{cpu_player_name} says Hello!!")
     custom_print(cpu_player_ascii)
-    null_input = input("\nPress ANY key to continue: ")
+    null_input = input("\nPress ENTER to continue: ")
     set_scoreboard()
     screen_clear()
     play_game()
