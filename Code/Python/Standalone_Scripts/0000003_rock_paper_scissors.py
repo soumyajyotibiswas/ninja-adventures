@@ -8,7 +8,6 @@ Classic Rock, Paper, Scissors
 --@soumyajyotibiswas
 """
 
-from operator import index
 import random,pandas,os
 
 score_board = ''
