@@ -24,8 +24,7 @@
 Okay, who hasn't played tic-tac-toe? Okay, try noughts and crosses? Still no? This is one of the classic games out there, quick, short and fun. Take a look at the [wikipedia page](https://en.wikipedia.org/wiki/Tic-tac-toe).
 Today we are going to build the game from scratch, to be played on a terminal, and yes, we are going to use python. So let's begin shall we?
 
-[LINK TO GITHUB VIDEO](https://user-images.githubusercontent.com/79418979/158605078-c6cc8327-47ec-417f-ae15-b0ddc737ee50.mp4)
-![tic-tac-toe](https://user-images.githubusercontent.com/79418979/158604872-9eff5f80-5295-4979-9d9c-f375165849a5.gif)
+https://user-images.githubusercontent.com/79418979/158605078-c6cc8327-47ec-417f-ae15-b0ddc737ee50.mp4
 
 ## Code <a name="Al1"></a>
 
