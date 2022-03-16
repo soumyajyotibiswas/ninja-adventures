@@ -1,4 +1,4 @@
-# Python scripting basics - Rock, paper and scissors game
+# Python scripting basics - Tic-tac-toe game
 
 ## Contents
 
