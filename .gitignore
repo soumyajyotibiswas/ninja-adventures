@@ -1,0 +1,7 @@
+# Ignore files under Code/UnderDev
+
+Code/UnderDev/
+
+# Ignore files under __pycache__
+
+__pycache__
