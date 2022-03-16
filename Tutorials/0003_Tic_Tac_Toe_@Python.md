@@ -1,4 +1,4 @@
-# Python scripting basics - Tic-tac-toe game
+# Python scripting basics - Tic-tac-toe game.
 
 ## Contents
 
