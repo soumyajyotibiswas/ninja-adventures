@@ -2,6 +2,10 @@
 
 Code/UnderDev/
 
+# Ignore files under Code/AWS/
+
+Code/AWS/
+
 # Ignore files under __pycache__
 
 __pycache__
