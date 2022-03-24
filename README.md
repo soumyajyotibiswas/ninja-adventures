@@ -13,9 +13,11 @@ One step at a time... 👨‍💻
       * [EC2_Instance_Snapshot_Scheduling_and_Cleanup_via_Lambda](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Projects/EC2_Instance_Snapshot_Scheduling_and_Cleanup_via_Lambda)📸
         * [0000006_lambda_create_daily_snapshots.py](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Projects/EC2_Instance_Snapshot_Scheduling_and_Cleanup_via_Lambda/0000006_lambda_create_daily_snapshots.py) 🕥
         * [0000007_lambda_remove_snapshots_7_days_old.py](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Projects/EC2_Instance_Snapshot_Scheduling_and_Cleanup_via_Lambda/0000007_lambda_remove_snapshots_7_days_old.py) 🕥
+      * [EBS_Volume_Cleanup_via_Lambda](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Projects/EBS_Available_State_Volume_Deletion)🧹
+        * [0000008_lambda_remove_ebs_volumes_in_available_state_older_than_7_days.py](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Projects/EBS_Available_State_Volume_Deletion/0000008_lambda_remove_ebs_volumes_in_available_state_older_than_7_days.py)🧹
     * [Standalone_Scripts](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Code/Python/Standalone_Scripts)
       * [0000001_hello_world.py](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000001_hello_world.py) - Just saying Hi. 😄
-      * [0000002_bmi_calculator.py](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000002_bmi_calculator.py) - Simple B.M.I calculator. 🏋️🖩
+      * [0000002_bmi_calculator.py](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000002_bmi_calculator.py) - Simple B.M.I calculator. 🏋️ 💻
       * [0000003_rock_paper_scissors.py](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000003_rock_paper_scissors.py) - Rock, paper and scissors game. 🪨📝✂️
       * [0000004_find_week_of_year.py](https://github.com/soumyajyotibiswas/ninja-adventures/blob/main/Code/Python/Standalone_Scripts/0000004_find_week_of_year.py) - Find the week number of any given date. 📅
 * [Tutorials](https://github.com/soumyajyotibiswas/ninja-adventures/tree/main/Tutorials) ✍🏻
