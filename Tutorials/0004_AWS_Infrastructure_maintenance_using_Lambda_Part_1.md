@@ -4,19 +4,19 @@
 
 ## Contents
 
-* [Summary](#Summary)
-* [Architecture diagram and high level overview of all the solutions](#Architecture_diagram_and_high_level_overview_of_all_the_solutions)
-  * [Architecture diagram](#Architecture_diagram)
-  * [EC2 instance daily ebs volume snapshots](#EC2_instance_daily_ebs_volume_snapshots)
-  * [EC2 instance daily ebs snapshot cleanup after X days](#EC2_instance_daily_ebs_snapshot_cleanup_after_X_days)
-  * [EC2 instance daily unattached ebs volume cleanup after X days](#EC2_instance_daily_unattached_ebs_volume_cleanup_after_X_days)
-  * [Deregister old EC2 Amazon machine images after X days](#Deregister_old_EC2_Amazon_machine_images_after_X_days)
-* [AWS IAM permissions](#AWS_IAM_permissions)
-  * [Permissions](#Permissions)
-  * [Trust relationship](#Trust_relationship)
-* [AWS EventBridge and Lambda](#AWS_EventBridge_and_Lambda)
-* [EC2 instance daily ebs volume snapshots solution](#EC2_instance_daily_ebs_volume_snapshots_solution)
-* [Coming up next](#Coming_up_next)
+* [Summary](#summary)
+* [Architecture diagram and high level overview of all the solutions](#architecture_diagram_and_high_level_overview_of_all_the_solutions)
+  * [Architecture diagram](#architecture_diagram)
+  * [EC2 instance daily ebs volume snapshots](#ec2_instance_daily_ebs_volume_snapshots)
+  * [EC2 instance daily ebs snapshot cleanup after X days](#ec2_instance_daily_ebs_snapshot_cleanup_after_x_days)
+  * [EC2 instance daily unattached ebs volume cleanup after X days](#ec2_instance_daily_unattached_ebs_volume_cleanup_after_x_days)
+  * [Deregister old EC2 Amazon machine images after X days](#deregister_old_ec2_amazon_machine_images_after_x_days)
+* [AWS IAM permissions](#aws_iam_permissions)
+  * [Permissions](#permissions)
+  * [Trust relationship](#trust_relationship)
+* [AWS EventBridge and Lambda](#aws_eventbridge_and_lambda)
+* [EC2 instance daily ebs volume snapshots solution](#ec2_instance_daily_ebs_volume_snapshots_solution)
+* [Coming up next](#coming_up_next)
 
 ---
 
