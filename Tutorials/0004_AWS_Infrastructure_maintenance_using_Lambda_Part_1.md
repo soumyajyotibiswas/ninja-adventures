@@ -5,29 +5,29 @@
 ## Contents
 
 * [Summary](#summary)
-* [Architecture diagram and high level overview of all the solutions](#architecture_diagram_and_high_level_overview_of_all_the_solutions)
-  * [Architecture diagram](#architecture_diagram)
-  * [EC2 instance daily ebs volume snapshots](#ec2_instance_daily_ebs_volume_snapshots)
-  * [EC2 instance daily ebs snapshot cleanup after X days](#ec2_instance_daily_ebs_snapshot_cleanup_after_x_days)
-  * [EC2 instance daily unattached ebs volume cleanup after X days](#ec2_instance_daily_unattached_ebs_volume_cleanup_after_x_days)
-  * [Deregister old EC2 Amazon machine images after X days](#deregister_old_ec2_amazon_machine_images_after_x_days)
-* [AWS IAM permissions](#aws_iam_permissions)
+* [Architecture diagram and high level overview of all the solutions](#architecture-diagram-and-high-level-overview-of-all-the-solutions)
+  * [Architecture diagram](#architecture-diagram)
+  * [EC2 instance daily ebs volume snapshots](#ec2-instance-daily-ebs-volume-snapshots)
+  * [EC2 instance daily ebs snapshot cleanup after X days](#ec2-instance-daily-ebs-snapshot-cleanup-after-x-days)
+  * [EC2 instance daily unattached ebs volume cleanup after X days](#ec2-instance-daily-unattached-ebs-volume-cleanup-after-x-days)
+  * [Deregister old EC2 Amazon machine images after X days](#deregister-old-ec2-amazon-machine-images-after-x-days)
+* [AWS IAM permissions](#aws-iam-permissions)
   * [Permissions](#permissions)
-  * [Trust relationship](#trust_relationship)
-* [AWS EventBridge and Lambda](#aws_eventbridge_and_lambda)
-* [EC2 instance daily ebs volume snapshots solution](#ec2_instance_daily_ebs_volume_snapshots_solution)
-* [Coming up next](#coming_up_next)
+  * [Trust relationship](#trust-relationship)
+* [AWS EventBridge and Lambda](#aws-eventbridge-and-lambda)
+* [EC2 instance daily ebs volume snapshots solution](#ec2-instance-daily-ebs-volume-snapshots-solution)
+* [Coming up next](#coming-up-next)
 
 ---
 
 ## Summary
 
-Welcome to [**PART-1**](#EC2_instance_daily_ebs_volume_snapshots) of a four part tutorial, on how to leverage AWS services like Lambda and EventBridge, to perform housekeeping on your AWS infrastructure on a schedule automatically. I am going to perform the following using AWS Lambda, EventBridge and python🐍.
+Welcome to [**PART-1**](#ec2-instance-daily-ebs-volume-snapshots) of a four part tutorial, on how to leverage AWS services like Lambda and EventBridge, to perform housekeeping on your AWS infrastructure on a schedule automatically. I am going to perform the following using AWS Lambda, EventBridge and python🐍.
 
-* [**[PART-1]**](#EC2_instance_daily_ebs_volume_snapshots) Create EBS volume snapshots of all our AWS EC2 instances in all regions, and tag them.
-* [**[PART-2]**](#EC2_instance_daily_ebs_snapshot_cleanup_after_X_days) Cleanup EBS volume snapshots from all our regions, whose age is greater than X days.
-* [**[PART-3]**](#EC2_instance_daily_unattached_ebs_volume_cleanup_after_X_days) Cleanup EBS volumes from all our regions, which is not attached to a resource, and whose age is greater than X days.
-* [**[PART-4]**](#Deregister_old_EC2_Amazon_machine_images_after_X_days) Deregister Amazon Machine Images from all our regions whose age is greater than X days.
+* [**[PART-1]**](#ec2-instance-daily-ebs-volume-snapshots) Create EBS volume snapshots of all our AWS EC2 instances in all regions, and tag them.
+* [**[PART-2]**](#ec2-instance-daily-ebs-snapshot-cleanup-after-x-days) Cleanup EBS volume snapshots from all our regions, whose age is greater than X days.
+* [**[PART-3]**](#ec2-instance-daily-unattached-ebs-volume-cleanup-after-x-days) Cleanup EBS volumes from all our regions, which is not attached to a resource, and whose age is greater than X days.
+* [**[PART-4]**](#deregister-old-ec2-amazon-machine-images-after-x-days) Deregister Amazon Machine Images from all our regions whose age is greater than X days.
 
 I am going to do all those using AWS EventBridge, AWS Lambda and python. This is going to automate any manual effort of going to every region and finding artifacts related to these and performing maintenance on them.
 
@@ -217,6 +217,6 @@ I am going to use [AWS Cloudwatch logs](https://docs.aws.amazon.com/AmazonCloudW
 
 ## Coming up next
 
-[Part 2](#EC2_instance_daily_ebs_snapshot_cleanup_after_X_days) of this tutorial where I will talk about creating code for daily ebs snapshot cleanup older than X days.
+[Part 2](#ec2-instance-daily-ebs-snapshot-cleanup-after-x-days) of this tutorial where I will talk about creating code for daily ebs snapshot cleanup older than X days.
 
 ---
