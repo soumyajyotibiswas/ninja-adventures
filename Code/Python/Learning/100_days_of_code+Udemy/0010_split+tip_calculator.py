@@ -2,7 +2,7 @@ intro_message="""
 Welcome to the split and tip calculator.
 The program will tell you how much your share with the tip added is.
 """
-
+print(intro_message)
 total_bill=float(input("What is the total bill? $"))
 split_by=int(input("How many people to split the bill between? "))
 tip_percentage=int(input("How much you want to tip? 10,15, or 20%? "))
