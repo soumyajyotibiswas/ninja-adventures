@@ -17,6 +17,28 @@ pirate_ascii = """
  //  /`"              `      `\\
 //
 """
+treasure_ascii='''
+*******************************************************************************
+          |                   |                  |                     |
+ _________|________________.=""_;=.______________|_____________________|_______
+|                   |  ,-"_,=""     `"=.|                  |
+|___________________|__"=._o`"-._        `"=.______________|___________________
+          |                `"=._o`"=._      _`"=._                     |
+ _________|_____________________:=._o "=._."_.-="'"=.__________________|_______
+|                   |    __.--" , ; `"=._o." ,-"""-._ ".   |
+|___________________|_._"  ,. .` ` `` ,  `"-._"-._   ". '__|___________________
+          |           |o`"=._` , "` `; .". ,  "-._"-._; ;              |
+ _________|___________| ;`-.o`"=._; ." ` '`."\` . "-._ /_______________|_______
+|                   | |o;    `"-.o`"=._``  '` " ,__.--o;   |
+|___________________|_| ;     (#) `-.o `"=.`_.--"_o.-; ;___|___________________
+____/______/______/___|o;._    "      `".o|o_.--"    ;o;____/______/______/____
+/______/______/______/_"=._o--._        ; | ;        ; ;/______/______/______/_
+____/______/______/______/__"=._o--._   ;o|o;     _._;o;____/______/______/____
+/______/______/______/______/____"=._o._; | ;_.--"o.--"_/______/______/______/_
+____/______/______/______/______/_____"=.o|o_.--""___/______/______/______/____
+/______/______/______/______/______/______/______/______/______/______/______/
+*******************************************************************************
+'''
 story_line="""
 Rudger the terrible stored all his treasure on this remote island.
 To find his treasure, you have to rise to all his challenges, hidden
@@ -49,7 +71,7 @@ else:
                 print(f"Your choices have brought you to final hurdle. You see two doors, one has the treasure, and another who knows what. Choose well from {door_choices}")
                 user_input_door=input("Enter your choice of door: ").lower()
                 if user_input_door == win_door:
-                    print("The treasure of Rudger the terrible is all yours. Congratulations!. Thank you for playing.")
+                    print(treasure_ascii,"\n","The treasure of Rudger the terrible is all yours. Congratulations!. Thank you for playing.")
                 else:
                     print(f"As soon as you opened the '{user_input_door}' door you are consume by a dark entity. Game Over!")
             else:
