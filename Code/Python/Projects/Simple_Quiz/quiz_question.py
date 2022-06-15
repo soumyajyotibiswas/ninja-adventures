@@ -6,4 +6,4 @@ class QuizQuestion():
         self.difficulty = difficulty
     
     def _clean_text(self,text):
-        return(text.replace('&#039;s','').replace('&quot;',''))
+        return(text.replace('&#039;',"'").replace('&quot;','\"'))
