@@ -2,6 +2,9 @@ from quiz_question import QuizQuestion
 from quiz_brain import QuizBrain
 from quiz_data import QuizData
 
+print('''
+Welcome to the Simple Quiz. The game retrives random difficulty questions from the opentdb.com website. You specify how many questions you want to play with and the game will retrive those many questions and get them across to you in the game.
+''')
 quiz_data=QuizData(int(input("Enter how many questions you want to face. The number of questions can be between 5 and 100. [eg: 5] --> ")))
 questions=quiz_data.get_questions()
 question_bank=[]
