@@ -9,3 +9,7 @@ Code/AWS/
 # Ignore files under __pycache__
 
 __pycache__
+
+# Ignore files under _venv
+
+*_venv
