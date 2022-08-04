@@ -1,5 +1,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
+from typing import Union, Dict, List, Type, Any
+json_type=Union[Dict[str, Any], List[Any], int, str, float, bool, Type[None]]
+
 if TYPE_CHECKING:
     pass
 import os,json
@@ -104,7 +107,7 @@ class CoffeeMachine():
     def reset_machine(self):
         self.turn_off(False)
 
-    def make_coffee(self,resources):
+    def make_coffee(self,resources:json_type):
         options=self.print_options_for_coffee(resources)
         if len(options) == 0:
             raise Exception(f"Unable to provide any coffee options to user. Contact vendor for repair.")
@@ -115,7 +118,7 @@ class CoffeeMachine():
         self.take_money(output)
         self.give_coffee(output)
 
-    def print_options_for_coffee(self,resources)->list:
+    def print_options_for_coffee(self,resources:json_type)->list[Any]:
         options=[]
         for key in self.coffee_menu.keys():
             for ingredient in list(self.coffee_menu[key]['ingredients'].keys()):
@@ -124,7 +127,7 @@ class CoffeeMachine():
             options.append(key)
         return options
 
-    def display_menu(self,when='',what=''):
+    def display_menu(self,when: str='',what: list[Any]=[]):
         count=0
         while(count < self.incorrect_attempts):
             if when=='initial':
@@ -141,13 +144,13 @@ class CoffeeMachine():
                 break
         return False
 
-    def is_correct_user_choice(self,user_choice, choices):
+    def is_correct_user_choice(self,user_choice:str, choices:json_type):
         if user_choice not in choices:
             return False
         else:
             return True
     
-    def give_coffee(self,output):
+    def give_coffee(self,output:str):
         os.system('clear')
         self.print_current_resource_level(self.resources)
         introduce_delay()
@@ -155,7 +158,7 @@ class CoffeeMachine():
         introduce_delay()
         print(f"Enjoy your {output}.\n")
 
-    def take_money(self,choice):
+    def take_money(self,choice:str):
         cost_of_choice=int(self.coffee_menu[choice]['cost'])
         print(f"\nYour '{choice}' will be a total of $'{cost_of_choice}'.")
         self.calculate_money(choice,cost_of_choice)
@@ -174,6 +177,7 @@ class CoffeeMachine():
             print(f"You entered a total of $'{total}' which is more than the cost $'{cost_of_choice}' for your '{choice}'. Refunding $'{remaining}'. Proceeding to make coffee.\n")
         else:
             print(f"You entered a total of $'{total}' which is equal than the cost $'{cost_of_choice}' for your '{choice}'. Proceeding to make coffee.\n")
+        input("\nEnter any key to continue..")
         self.update_current_resource_data(choice,cost_of_choice)
 
     def initialize_resource_file(self)->None:
@@ -185,7 +189,7 @@ class CoffeeMachine():
             return False
         return True
 
-    def load_from_resource_file(self)->json:
+    def load_from_resource_file(self)->json_type:
         with open(self.resource_file_name,'r') as file:
             data=json.load(file)
             file.close()
@@ -198,7 +202,7 @@ class CoffeeMachine():
                     return False
         return True
 
-    def print_current_resource_level(self, data:json):
+    def print_current_resource_level(self, data:json_type):
         print("\n****Generating System Report****")
         introduce_delay()
         for i in list(data.keys()):
@@ -209,7 +213,7 @@ class CoffeeMachine():
             else:
                 print(f" '{i}' left {data[i]['Current_Level']}ml.")
 
-    def write_to_resource_file(self, data:json)->None:
+    def write_to_resource_file(self, data:json_type)->None:
         with open(self.resource_file_name,'w') as file:
             file.write(json.dumps(data,indent=4))
             _ = file.close()
