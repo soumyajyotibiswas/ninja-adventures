@@ -10,7 +10,7 @@ stores=[
         'name': 'My Store 1',
         'items': [
             {
-                'name': 'My item 1',
+                'name': 'My Item 1',
                 'price': 15.99
             }
         ]
@@ -37,7 +37,7 @@ def get_store(store_name: str) -> json_type:
     return jsonify({"message":f"{store_name} not found"})
 
 # GET /store
-@app.route('/store')
+@app.route('/stores')
 def get_stores() -> json_type:
     return jsonify({'stores':stores})
 
@@ -56,7 +56,7 @@ def create_item_in_store(store_name: str) -> json_type:
     return jsonify({"message":f"{store_name} not found"})
 
 # GET /store/<string:store_name>/item
-@app.route('/store/<string:store_name>/item')
+@app.route('/store/<string:store_name>/items')
 def get_items_in_store(store_name: str) -> json_type:
     for store in stores:
         if store['name'] == store_name:
