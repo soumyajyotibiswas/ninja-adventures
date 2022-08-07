@@ -1,10 +1,14 @@
 from flask import Flask
 from flask_restful import Resource, Api, request
 from typing import Union, Dict, List, Type, Any
+from flask_jwt import JWT, jwt_required
+from security import authenticate,identity
 
 json_type=Union[Dict[str, Any], List[Any], int, str, float, bool, Type[None]]
 app = Flask(__name__)
+app.secret_key = 'TopSecretKey'
 api = Api(app)
+jwt = JWT(app,authenticate,identity)
 
 # In memory database
 stores=[
@@ -34,6 +38,7 @@ stores=[
 
 class Stores(Resource):
 
+    @jwt_required()
     def get(self, all_items:str = None) -> json_type:
         if all_items != None:
             if all_items == 'all':
@@ -47,7 +52,7 @@ class Stores(Resource):
         if request_data['name'] in [store['name'] for store in stores]:
             return {"message": f"Cannot create store {request_data['name']!r} which is already present."}, 403
         stores.append({"name": request_data['name'], "items": []})
-        return {"message": f"{request_data['name']!r} created successfully."}
+        return {"message": f"{request_data['name']!r} created successfully."}, 201
 
     def delete(self)-> json_type:
         request_data = request.get_json()
@@ -67,6 +72,7 @@ api.add_resource(Stores, '/stores/delete', endpoint="delete_store")
 
 class Store(Resource):
 
+    @jwt_required()
     def get(self,store_name: str,item_name: str=None)-> json_type:
 
         # Check if store name is valid
@@ -98,12 +104,15 @@ class Store(Resource):
         # Find the current store inventory
         current_store = [store for store in stores if store['name']==store_name][0]
 
+        if item_name == 'all':
+            return {"message":f"{item_name!r} name is not allowed."}, 403
+
         # Create / Update item
         if item_name not in [item['name'] for item in current_store['items']]:
             current_store['items'].append({"name":item_name,"price":item_price})
         else:
             [item for item in current_store['items'] if item['name']==item_name][0]['price']=item_price
-        return {"message": f"{item_name!r} of price {item_price!r} added to store {store_name!r}."}
+        return {"message": f"{item_name!r} of price {item_price!r} added to store {store_name!r}."}, 201
 
     def delete(self,store_name: str,item_name: str=None)-> json_type:
 
@@ -122,6 +131,12 @@ class Store(Resource):
         return {"message": f"{item_name!r} deleted from store {store_name!r}."}
 
 api.add_resource(Store, '/stores/store/<string:store_name>/item/<string:item_name>')
+
+class Home(Resource):
+    def get(self):
+        return "Welcome to store manager api program."
+
+api.add_resource(Home, '/')
 
 # Run app
 app.run(port=5000)
