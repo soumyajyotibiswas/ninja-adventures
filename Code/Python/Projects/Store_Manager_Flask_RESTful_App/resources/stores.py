@@ -1,4 +1,5 @@
-from connections import Connections
+from models.connections import Connections
+from models.store_model import Store_Model
 from flask_restful import Resource, request
 from flask_jwt import jwt_required
 from typing import Union, Dict, List, Type, Any, Tuple
@@ -26,10 +27,11 @@ class Stores(Resource):
         self.database_connections.stop_connection(connection)
         return {"stores": stores}
     
+    @jwt_required()
     def put(self) -> json_type:
         request_data = request.get_json()
         store_name = request_data['name']
-        if self.if_store_exists(store_name):
+        if Store_Model.if_store_exists(store_name):
             return {"message": f"Cannot create store {request_data['name']!r} which is already present."}, 403        
         connection,cursor = self.database_connections.start_connection()
         query = "INSERT INTO stores VALUES (?)"
@@ -37,12 +39,13 @@ class Stores(Resource):
         self.database_connections.stop_connection(connection)
         return {"message": f"{store_name!r} created successfully."}, 201
 
+    @jwt_required()
     def delete(self)-> json_type:
         request_data = request.get_json()
         store_name = request_data['name']
         connection,cursor = self.database_connections.start_connection()
 
-        if not self.if_store_exists(store_name):
+        if not Store_Model.if_store_exists(store_name):
             self.database_connections.stop_connection(connection)
             return {"message": f"Cannot delete store {store_name!r} which is not present."}, 403
 
@@ -56,6 +59,7 @@ class Stores(Resource):
         self.database_connections.stop_connection(connection)
         return {"message": f"{store_name!r} deleted successfully."}
 
+    @jwt_required()
     def if_store_exists(self,store: str)-> bool:
         connection,cursor = self.database_connections.start_connection()
         query = "SELECT * from stores WHERE name=?"
@@ -66,20 +70,20 @@ class Stores(Resource):
         else:
             return False
 
+
 class Store(Resource):
 
-    Stores = Stores()
     def __init__(self) -> None:
         self.database_connections = Connections()
-        self.stores = Stores()
     
+    @jwt_required()
     def get(self,store_name: str,item_name: str=None)-> json_type:
 
         # Start DB connection
         connection, cursor = self.database_connections.start_connection()
 
         # Check if store name is valid
-        if not self.stores.if_store_exists(store_name):
+        if not Store_Model.if_store_exists(store_name):
             return {"message":f"{store_name!r} not found."}, 404
 
         # Find the current store inventory
@@ -99,9 +103,9 @@ class Store(Resource):
             return {"message": f"{item_name!r} not found in store {store_name!r}."}, 404
         else:
             item_to_return = [item for item in items if item[1]==item_name][0]
-            return {"item": {"id":item_to_return[0],"name":item_to_return[1],"store_name":item_to_return[2],"price":item_to_return[3]}}
-            
-        
+            return {"item": {"id":item_to_return[0],"name":item_to_return[1],"store_name":item_to_return[2],"price":item_to_return[3]}}      
+    
+    @jwt_required()
     def put(self,store_name: str,item_name: str=None)-> json_type:
 
         connection,cursor = self.database_connections.start_connection()
@@ -109,7 +113,7 @@ class Store(Resource):
         item_price = request_data['price']
 
         # Check if store name is valid
-        if not self.stores.if_store_exists(store_name):
+        if not Store_Model.if_store_exists(store_name):
             return {"message":f"{store_name!r} not found."}, 404
 
         if item_name == 'all':
@@ -125,13 +129,14 @@ class Store(Resource):
         self.database_connections.commit_connection(connection)
         self.database_connections.stop_connection(connection)
         return {"message": f"{item_name!r} of price {item_price!r} added to store {store_name!r}."}, 201
-
+    
+    @jwt_required()
     def delete(self,store_name: str,item_name: str=None)-> json_type:
 
         connection,cursor = self.database_connections.start_connection()
 
         # Check if store name is valid
-        if not self.stores.if_store_exists(store_name):
+        if not Store_Model.if_store_exists(store_name):
             return {"message":f"{store_name!r} not found."}, 404
 
         items = [row for row in cursor.execute("SELECT * FROM items WHERE store_name=?",(store_name,))]

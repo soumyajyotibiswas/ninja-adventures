@@ -2,10 +2,10 @@ from flask import Flask
 from flask_restful import Resource, Api
 from typing import Union, Dict, List, Type, Any
 from flask_jwt import JWT
-from security import authenticate,identity
-from user import UserRegister
-from create_tables import CreateTables
-from stores import Stores, Store
+from resources.security import authenticate,identity
+from resources.user_register import UserRegister
+from models.create_tables import CreateTables
+from resources.stores import Stores, Store
 
 json_type=Union[Dict[str, Any], List[Any], int, str, float, bool, Type[None]]
 app = Flask(__name__)
