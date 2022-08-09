@@ -31,4 +31,5 @@ api.add_resource(Home, '/')
 api.add_resource(UserRegister, '/register')
 
 # Run app
-app.run(port=5000)
+if __name__ == '__main__':
+    app.run(port=5000)
