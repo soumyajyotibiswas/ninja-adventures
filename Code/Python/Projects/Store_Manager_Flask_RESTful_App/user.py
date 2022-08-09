@@ -53,6 +53,3 @@ class UserRegister(Resource):
             connection.commit()
             connection.close()
             return {"message":f"User {username!r} already exists, the operation is not permitted"},403
-            
-
-        
