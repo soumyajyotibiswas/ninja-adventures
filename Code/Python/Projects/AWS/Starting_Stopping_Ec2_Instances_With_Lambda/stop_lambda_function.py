@@ -12,8 +12,8 @@ def lambda_handler(event: Dict ,context: 'awslambdaric.lambda_context.LambdaCont
     Primary lambda handler function
 
     Args:
-        event (Dict): _description_
-        context (awslambdaric.lambda_context.LambdaContext): _description_
+        event (Dict): lambda event
+        context (awslambdaric.lambda_context.LambdaContext): lambda context
     """
     # Get list of regions
     regions = get_regions()
