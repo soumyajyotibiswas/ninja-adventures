@@ -2,16 +2,18 @@
 Stops running ec2 instances
 """
 
+from typing import Dict
+
 from lambda_helpers import get_regions, get_resource
 
 
-def lambda_handler(event,context) -> None:
+def lambda_handler(event: Dict ,context: 'awslambdaric.lambda_context.LambdaContext') -> None:
     """
     Primary lambda handler function
 
     Args:
-        event (_type_): _description_
-        context (_type_): _description_
+        event (Dict): _description_
+        context (awslambdaric.lambda_context.LambdaContext): _description_
     """
     # Get list of regions
     regions = get_regions()
