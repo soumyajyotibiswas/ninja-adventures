@@ -1,9 +1,15 @@
+"""
+Create thumbnails in S3 using AWS Lambda
+"""
+
 import os
 import tempfile
 from typing import Dict
-from PIL import Image
-from lambda_helpers import get_client
+
 import config
+from lambda_helpers import get_client
+from PIL import Image
+
 
 def generate_thumbnail(source_path: str, destination_path: str) -> None:
     """
@@ -38,4 +44,3 @@ def lambda_handler(event: Dict,context: 'awslambdaric.lambda_context.LambdaConte
             generate_thumbnail(source_path=download_path, destination_path=upload_path)
             s3_client.upload_file(upload_path, config.DESTINATION_BUCKET, thumbnail)
             print(f"Thumbnail image saved at {config.DESTINATION_BUCKET}/{thumbnail}")
-
