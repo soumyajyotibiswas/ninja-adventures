@@ -6,25 +6,27 @@ This is an aggregate of multiple personal development courses taken to improve m
 
 - [1. Learning python](#1-learning-python)
   - [1.1. Table of contents](#11-table-of-contents)
-  - [1.2. Learning how to code in python](#12-learning-how-to-code-in-python)
-    - [1.2.1. The complete python course by Jose Salvatierra](#121-the-complete-python-course-by-jose-salvatierra)
-      - [1.2.1.1. A simple text menu](#1211-a-simple-text-menu)
-  - [1.3. Dsa](#13-dsa)
-    - [1.3.1. freeCodeCamp.org - dsa with python](#131-freecodecamporg---dsa-with-python)
-  - [1.4. Apps](#14-apps)
+  - [1.2. apps](#12-apps)
+  - [1.3. dsa](#13-dsa)
+  - [1.4. learning\_how\_to\_code\_in\_python](#14-learning_how_to_code_in_python)
+    - [1.4.1. a\_simple\_text\_menu.py](#141-a_simple_text_menupy)
+    - [1.4.2. fizz\_buzz.py](#142-fizz_buzzpy)
+    - [1.4.3. lists\_sets\_dictionaries.py](#143-lists_sets_dictionariespy)
+    - [1.4.4. movie\_collections.py](#144-movie_collectionspy)
+    - [1.4.5. prime\_number.py](#145-prime_numberpy)
 
-## 1.2. Learning how to code in python
+## 1.2. apps
 
-### 1.2.1. The complete python course by Jose Salvatierra
+## 1.3. dsa
 
-Link to course [here](https://www.udemy.com/course/the-complete-python-course/).
+## 1.4. learning_how_to_code_in_python
 
-#### 1.2.1.1. A simple text menu
+### 1.4.1. a_simple_text_menu.py
 
-## 1.3. Dsa
+### 1.4.2. fizz_buzz.py
 
-### 1.3.1. freeCodeCamp.org - dsa with python
+### 1.4.3. lists_sets_dictionaries.py
 
-Link to course [here](https://www.youtube.com/watch?v=pkYVOmU3MgA).
+### 1.4.4. movie_collections.py
 
-## 1.4. Apps
+### 1.4.5. prime_number.py
