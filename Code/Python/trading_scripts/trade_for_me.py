@@ -496,7 +496,8 @@ def main():
         "8": partial(exit_program),
     }
 
-    while True and EXIT_SCRIPT != True:
+    while EXIT_SCRIPT != True:
+        _ = os.system("cls" if os.name == "nt" else "clear")
         start = time.process_time()
 
         print("Options Menu")
@@ -516,6 +517,7 @@ def main():
             print(
                 f"\nTime taken to execute choice:{choice} - {round(time.process_time() - start,10)} seconds.\n"
             )
+            input("\nPress any key to continue.\n")
         else:
             print("Invalid choice. Please enter a choice between 1-8.")
 
