@@ -23,4 +23,5 @@ CONSTANTS = {
     "SCRIP_MASTER_CSV_FILE_NAME": "scripmaster-csv-format.csv",
     "SCRIP_MASTER_CSV_URL": "https://images.5paisa.com/website/scripmaster-csv-format.csv",
     "REQUESTS_TIMEOUT": 180,
+    "OPEN_ORDERS_FILE": "open_orders.json",
 }

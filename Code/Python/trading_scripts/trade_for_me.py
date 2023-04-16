@@ -2,10 +2,13 @@
 This script is a trading bot for the 5paisa trading platform. It is used to place call and put options for the Nifty and BankNifty indices. It makes use of the py5paisa package to interact with the 5paisa trading API. The script first downloads a CSV file containing a list of scrips and their corresponding codes from a remote URL. It then uses this CSV file to fetch the scrip code for a given scrip name. It also uses a CSV file containing a list of holidays to check whether a given date is a holiday or not. The script then places the call and put options using the py5paisa package. The expiry date for the options is set to the expiry date of the current week, which is computed based on the current date and the Indian stock market weekly expiry on every Thursday. If Thursday is a holiday, the expiry date is set to the previous day. The bot places orders for call and put options based on the last traded price of the index and the buffer margin specified in the CONSTANTS dictionary. The bot also takes into account the maximum lot size for call and put options for Nifty and BankNifty indices.
 """
 
-import argparse
+import base64
 import csv
 import datetime
+import json
 import os
+import pickle
+import subprocess
 import time
 from functools import partial
 from typing import Optional
@@ -38,6 +41,7 @@ BANKNIFTY_MAX_LOT_SIZE = CONSTANTS["BANKNIFTY_MAX_LOT_SIZE"]
 SCRIP_MASTER_CSV_FILE_NAME = CONSTANTS["SCRIP_MASTER_CSV_FILE_NAME"]
 SCRIP_MASTER_CSV_URL = CONSTANTS["SCRIP_MASTER_CSV_URL"]
 REQUESTS_TIMEOUT = CONSTANTS["REQUESTS_TIMEOUT"]
+OPEN_ORDERS_FILE = CONSTANTS["OPEN_ORDERS_FILE"]
 
 
 def exit_program():
@@ -45,19 +49,6 @@ def exit_program():
     print("Exiting...")
     global EXIT_SCRIPT
     EXIT_SCRIPT = True
-
-
-def parse_arguments() -> argparse.Namespace:
-    """
-    Parse command-line arguments for the script.
-
-    Returns:
-        argparse.Namespace: An object containing the parsed arguments.
-    """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--response-token", required=True, help="5paisa response token")
-    args = parser.parse_args()
-    return args
 
 
 def create_client(credentials) -> FivePaisaClient:
@@ -194,12 +185,12 @@ def get_client_margin(client) -> float:
     float: The current margin available in the user's trading account, after deducting the buffer margin.
     """
     margin_response = client.margin()
-    current_margin = margin_response[0]["AvailableMargin"]
-    return current_margin - BUFFER_MARGIN
+    current_margin = margin_response[0]["AvailableMargin"] - BUFFER_MARGIN
+    return current_margin
 
 
 def strike_price_for_option(
-    current_date, current_expiry, step_size, current_rate
+    current_date, current_expiry, step_size, current_rate, option_type
 ) -> float:
     """
     Calculates the strike price for the option.
@@ -216,9 +207,15 @@ def strike_price_for_option(
     """
     # Create strike price
     if current_date == current_expiry:
-        strike_price = (current_rate // step_size) * step_size
+        if option_type == CALL_ORDER_TYPE:
+            strike_price = (current_rate // step_size) * step_size - step_size
+        else:
+            strike_price = (current_rate // step_size) * step_size + step_size
     else:
-        strike_price = (current_rate // step_size) * step_size + step_size
+        if option_type == CALL_ORDER_TYPE:
+            strike_price = (current_rate // step_size) * step_size + step_size
+        else:
+            strike_price = (current_rate // step_size) * step_size - step_size
     return strike_price
 
 
@@ -249,7 +246,7 @@ def fetch_option_price(
     # <py5paisa.py5paisa.FivePaisaClient object at 0x7f9e50e36980> 41041 BANKNIFTY 25 2023-04-08 2023-04-13 PE
     # Create strike price
     strike_price = strike_price_for_option(
-        current_date, current_expiry, step_size, current_rate
+        current_date, current_expiry, step_size, current_rate, option_type
     )
     # Convert current_expiry to datetime objects
     current_expiry_dt = datetime.datetime.strptime(current_expiry, "%Y-%m-%d").date()
@@ -386,22 +383,63 @@ def buy_sell_function(
         max_lot_size = BANKNIFTY_MAX_LOT_SIZE
     else:
         raise ValueError("Invalid symbol")
+
+    # Remove open_order.json file if present
+    if os.path.exists(OPEN_ORDERS_FILE):
+        os.remove(OPEN_ORDERS_FILE)
+
     expiry_date_dt = datetime.datetime.strptime(expiry_date, "%Y-%m-%d").date()
     total_lots = to_purchase
     to_match = f"{symbol} {expiry_date_dt.strftime('%d %b %Y')} {option_type} {option_strike:.2f}"
     scrip_code = int(fetch_scrip_code_from_csv(DF_PD, to_match))
+    serialized_client = base64.b64encode(pickle.dumps(client))
+    pid = []
     while total_lots > 0:
         current_lot_size = min(total_lots, max_lot_size)
         quantity = current_lot_size * symbol_lot_size
-        client.place_order(
-            OrderType=order_type,
-            Exchange=exchange,
-            ExchangeType=exchange_type,
-            ScripCode=scrip_code,
-            Qty=quantity,
-            Price=inflated_option_price,
-        )
+        # Define the command to execute the script
+        cmd = [
+            "python3",
+            "place_order.py",
+            "--client",
+            serialized_client,
+            "--order-type",
+            order_type,
+            "--exchange",
+            exchange,
+            "--exchange-type",
+            exchange_type,
+            "--scrip-code",
+            str(scrip_code),
+            "--quantity",
+            str(quantity),
+            "--inflated-option-price",
+            str(inflated_option_price),
+        ]
+        # Execute the command in a new process
+        process = subprocess.Popen(cmd, bufsize=0)
+        pid.append(process.pid)
         total_lots -= current_lot_size
+
+    with open(OPEN_ORDERS_FILE, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "symbol": symbol,
+                "expiry_date": expiry_date,
+                "option_type": option_type,
+                "option_strike": option_strike,
+                "symbol_lot_size": symbol_lot_size,
+                "total_lots": to_purchase,
+                "max_lot_size": max_lot_size,
+                "scrip_code": scrip_code,
+                "order_type": order_type,
+                "exchange": exchange,
+                "exchange_type": exchange_type,
+                "price": inflated_option_price,
+                "process_ids": pid,
+            },
+            f,
+        )
 
 
 # Build sell order
@@ -415,7 +453,46 @@ def sell_all_positions(client):
     Returns:
     - None.
     """
-    client.squareoff_all()
+    if os.path.exists(OPEN_ORDERS_FILE):
+        with open(OPEN_ORDERS_FILE, "r", encoding="utf-8") as f:
+            orders = json.load(f)
+            total_lots = orders["total_lots"]
+            max_lot_size = orders["max_lot_size"]
+            symbol_lot_size = orders["symbol_lot_size"]
+            order_type = "S"
+            exchange_type = orders["exchange_type"]
+            exchange = orders["exchange"]
+            scrip_code = orders["scrip_code"]
+            inflated_option_price = 0
+            serialized_client = base64.b64encode(pickle.dumps(client))
+            pid = []
+            while total_lots > 0:
+                current_lot_size = min(total_lots, max_lot_size)
+                quantity = current_lot_size * symbol_lot_size
+                cmd = [
+                    "python3",
+                    "place_order.py",
+                    "--client",
+                    serialized_client,
+                    "--order-type",
+                    order_type,
+                    "--exchange",
+                    exchange,
+                    "--exchange-type",
+                    exchange_type,
+                    "--scrip-code",
+                    str(scrip_code),
+                    "--quantity",
+                    str(quantity),
+                    "--inflated-option-price",
+                    str(inflated_option_price),
+                ]
+                # Execute the command in a new process
+                process = subprocess.Popen(cmd, bufsize=0)
+                pid.append(process.pid)
+                total_lots -= current_lot_size
+            os.remove(OPEN_ORDERS_FILE)
+            print(f"Placed sell orders: PID {pid}")
 
 
 # Display positions
@@ -444,10 +521,9 @@ def main():
     Returns:
         None
     """
-    args = parse_arguments()
     current_date = datetime.date.today().strftime("%Y-%m-%d")
     client = create_client(CREDENTIALS)
-    client.get_access_token(args.response_token)
+    client.get_access_token(input("Enter your request token: "))
     current_expiry = get_current_week_expiry_date()
     download_scrip_csv(SCRIP_MASTER_CSV_URL, SCRIP_MASTER_CSV_FILE_NAME)
     global DF_PD
@@ -491,14 +567,13 @@ def main():
         "6": partial(sell_all_positions, client),
         "7": partial(
             print,
-            f"\nYour available margin balance is INR: {float(get_client_margin(client)) + float(10000)}\n",
+            f"\nYour available margin balance is INR: {float(get_client_margin(client)) + float(BUFFER_MARGIN)}\n",
         ),
         "8": partial(exit_program),
     }
 
-    while EXIT_SCRIPT != True:
+    while not EXIT_SCRIPT:
         _ = os.system("cls" if os.name == "nt" else "clear")
-        start = time.process_time()
 
         print("Options Menu")
         print("1. BUY NIFTY50 CALL")
@@ -514,9 +589,9 @@ def main():
         if choice in options_dict:
             start = time.process_time()
             options_dict[choice]()
-            print(
-                f"\nTime taken to execute choice:{choice} - {round(time.process_time() - start,10)} seconds.\n"
-            )
+            elapsed_time = time.process_time() - start
+            minutes, seconds = divmod(elapsed_time, 60)
+            print(f"\nElapsed time: {minutes:.0f} minutes, {seconds:.5f} seconds")
             input("\nPress any key to continue.\n")
         else:
             print("Invalid choice. Please enter a choice between 1-8.")
